@@ -6,7 +6,7 @@ class Book extends Component {
     static propTypes = {
         coverURL: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
-        author: PropTypes.string.isRequired
+        authors: PropTypes.array.isRequired
     }
     state = {
         bookshelf: 'None'
@@ -27,7 +27,7 @@ class Book extends Component {
           </div>
         </div>
         <div className="book-title">{this.props.title}</div>
-        <div className="book-authors">{this.props.author}</div>
+        <div className="book-authors">{this.props.authors.join()}</div>
       </div>
         )
     }
