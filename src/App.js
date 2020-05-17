@@ -28,6 +28,17 @@ class BooksApp extends React.Component {
 
   render() {
     console.log(this.state.books)
+
+    const books = []
+
+    for (let book of this.state.books) {
+      books.push(<li key={book.id}> <Book
+        coverURL= {book.imageLinks.thumbnail}
+        title = {book.title}
+        authors = {book.authors}
+        /></li>)
+    }
+
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -62,18 +73,7 @@ class BooksApp extends React.Component {
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                      <li>
-                        { this.state.books.length > 0 ?
-                           (<Book
-                            coverURL= {this.state.books[0].imageLinks.thumbnail}
-                            title = {this.state.books[0].title}
-                            authors = {this.state.books[0].authors}
-                            />) : null
-                        }
-                        
-                      </li>
-                      <li>
-                      </li>
+                      {books}
                     </ol>
                   </div>
                 </div>
