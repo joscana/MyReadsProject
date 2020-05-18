@@ -12,32 +12,72 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: false,
-    books: []
+    currentlyReading: [],
+    wantToRead: [],
+    read: []
   }
 
   componentDidMount() {
     BooksAPI.getAll()
     .then(response => {
-      // console.log(response);
+      const currentlyReading = []
+      const wantToRead = []
+      const read = []
+
+      for (let book of response) {
+        if(book.shelf === "currentlyReading") {
+          currentlyReading.push(book)
+          console.log(currentlyReading)
+        }
+        else if(book.shelf === "wantToRead") {
+          wantToRead.push(book)
+          console.log(wantToRead)
+        }
+        else if(book.shelf === "read") {
+          read.push(book)
+          console.log(read)
+        }
+      }
+
       this.setState({
-        books: response
+        currentlyReading: currentlyReading,
+        wantToRead: wantToRead,
+        read: read
       });
 
     });
   }
 
   render() {
-    console.log(this.state.books)
+    const currentlyReading = []
+    const wantToRead = []
+    const read = []
 
-    const books = []
-
-    for (let book of this.state.books) {
-      books.push(<li key={book.id}> <Book
+    for (let book of this.state.currentlyReading) {
+      currentlyReading.push(<li key={book.id}> <Book
         coverURL= {book.imageLinks.thumbnail}
         title = {book.title}
         authors = {book.authors}
         /></li>)
     }
+
+    for (let book of this.state.wantToRead) {
+      wantToRead.push(<li key={book.id}> <Book
+        coverURL= {book.imageLinks.thumbnail}
+        title = {book.title}
+        authors = {book.authors}
+        /></li>)
+    }
+
+    for (let book of this.state.read) {
+      read.push(<li key={book.id}> <Book
+        coverURL= {book.imageLinks.thumbnail}
+        title = {book.title}
+        authors = {book.authors}
+        /></li>)
+    }
+
+
 
     return (
       <div className="app">
@@ -73,7 +113,7 @@ class BooksApp extends React.Component {
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                      {books}
+                      {currentlyReading}
                     </ol>
                   </div>
                 </div>
@@ -81,7 +121,7 @@ class BooksApp extends React.Component {
                   <h2 className="bookshelf-title">Want to Read</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                      {books}
+                      {wantToRead}
                     </ol>
                   </div>
                 </div>
@@ -89,7 +129,7 @@ class BooksApp extends React.Component {
                   <h2 className="bookshelf-title">Read</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                      {books}
+                      {read}
                     </ol>
                   </div>
                 </div>
