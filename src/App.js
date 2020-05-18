@@ -48,6 +48,12 @@ class BooksApp extends React.Component {
     });
   }
 
+  changeShelf(bookId, shelf) {
+    console.log(`Change shelf called with bookId=${bookId} and shelf=${shelf}`)
+    const book = {id: bookId}
+    BooksAPI.update(book, shelf)
+  }
+
   render() {
     const currentlyReading = []
     const wantToRead = []
@@ -55,25 +61,31 @@ class BooksApp extends React.Component {
 
     for (let book of this.state.currentlyReading) {
       currentlyReading.push(<li key={book.id}> <Book
+        bookId = {book.id}
         coverURL= {book.imageLinks.thumbnail}
         title = {book.title}
         authors = {book.authors}
+        changeShelf = {this.changeShelf}
         /></li>)
     }
 
     for (let book of this.state.wantToRead) {
       wantToRead.push(<li key={book.id}> <Book
+        bookId = {book.id}
         coverURL= {book.imageLinks.thumbnail}
         title = {book.title}
         authors = {book.authors}
+        changeShelf = {this.changeShelf}
         /></li>)
     }
 
     for (let book of this.state.read) {
       read.push(<li key={book.id}> <Book
+        bookId = {book.id}
         coverURL= {book.imageLinks.thumbnail}
         title = {book.title}
         authors = {book.authors}
+        changeShelf = {this.changeShelf}
         /></li>)
     }
 
