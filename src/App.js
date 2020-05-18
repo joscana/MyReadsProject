@@ -18,6 +18,10 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount() {
+    this.requestBooks()
+  }
+
+  requestBooks = () => {
     BooksAPI.getAll()
     .then(response => {
       const currentlyReading = []
@@ -48,10 +52,14 @@ class BooksApp extends React.Component {
     });
   }
 
-  changeShelf(bookId, shelf) {
-    console.log(`Change shelf called with bookId=${bookId} and shelf=${shelf}`)
-    const book = {id: bookId}
+  changeShelf = (bookId, shelf) => {
+    console.log(`Change shelf called with bookId=${bookId} and shelf=${shelf}`);
+    const book = {id: bookId};
     BooksAPI.update(book, shelf)
+    .then( response => {
+      console.log(response);
+      this.requestBooks();
+    });
   }
 
   render() {
