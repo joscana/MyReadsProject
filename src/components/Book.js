@@ -8,12 +8,10 @@ class Book extends Component {
         coverURL: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
         authors: PropTypes.array.isRequired,
-        changeShelf: PropTypes.func.isRequired
+        changeShelf: PropTypes.func.isRequired,
+        bookShelf: PropTypes.string.isRequired
     }
-    state = {
-        bookshelf: 'None'
-    }
-
+    
     changeShelf = (event) => {
         const shelf = event.target.value;
         this.props.changeShelf(this.props.bookId, shelf);
@@ -27,10 +25,10 @@ class Book extends Component {
           <div className="book-shelf-changer">
             <select onChange={this.changeShelf}> 
               <option value="move" disabled>Move to...</option>
-              <option value="currentlyReading">Currently Reading</option>
-              <option value="wantToRead">Want to Read</option>
-              <option value="read">Read</option>
-              <option value="none">None</option>
+              <option value="currentlyReading" selected={this.props.bookShelf === "currentlyReading"}>Currently Reading</option>
+              <option value="wantToRead" selected= {this.props.bookShelf ==="wantToRead"}>Want to Read</option>
+              <option value="read" selected={this.props.bookShelf === "read"}>Read</option>
+              <option value="none" selected={this.props.bookShelf === "none"}>None</option>
             </select>
           </div>
         </div>

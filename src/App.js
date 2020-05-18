@@ -73,6 +73,7 @@ class BooksApp extends React.Component {
         coverURL= {book.imageLinks.thumbnail}
         title = {book.title}
         authors = {book.authors}
+        bookShelf = {book.shelf}
         changeShelf = {this.changeShelf}
         /></li>)
     }
@@ -83,6 +84,7 @@ class BooksApp extends React.Component {
         coverURL= {book.imageLinks.thumbnail}
         title = {book.title}
         authors = {book.authors}
+        bookShelf = {book.shelf}
         changeShelf = {this.changeShelf}
         /></li>)
     }
@@ -93,6 +95,7 @@ class BooksApp extends React.Component {
         coverURL= {book.imageLinks.thumbnail}
         title = {book.title}
         authors = {book.authors}
+        bookShelf = {book.shelf}
         changeShelf = {this.changeShelf}
         /></li>)
     }
