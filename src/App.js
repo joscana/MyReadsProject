@@ -1,9 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Book from './components/Book'
 
 class BooksApp extends React.Component {
+  static propTypes = {
+    books: PropTypes.array.isRequired,
+  }
   state = {
     /**
      * TODO: Instead of using this state variable to keep track of which page
@@ -14,7 +18,8 @@ class BooksApp extends React.Component {
     showSearchPage: false,
     currentlyReading: [],
     wantToRead: [],
-    read: []
+    read: [],
+    query: ''
   }
 
   componentDidMount() {
@@ -31,15 +36,12 @@ class BooksApp extends React.Component {
       for (let book of response) {
         if(book.shelf === "currentlyReading") {
           currentlyReading.push(book)
-          console.log(currentlyReading)
         }
         else if(book.shelf === "wantToRead") {
           wantToRead.push(book)
-          console.log(wantToRead)
         }
         else if(book.shelf === "read") {
           read.push(book)
-          console.log(read)
         }
       }
 
@@ -53,13 +55,17 @@ class BooksApp extends React.Component {
   }
 
   changeShelf = (bookId, shelf) => {
-    console.log(`Change shelf called with bookId=${bookId} and shelf=${shelf}`);
     const book = {id: bookId};
     BooksAPI.update(book, shelf)
     .then( response => {
-      console.log(response);
       this.requestBooks();
     });
+  }
+
+  updateQuery = (query) => {
+    this.setState(() =>({
+      query: query.trim()
+  }))
   }
 
   render() {
@@ -117,7 +123,21 @@ class BooksApp extends React.Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-                <input type="text" placeholder="Search by title or author"/>
+                const { query } = this.state.query
+                const { books } = this.props
+
+                const showingBooks = query === '' 
+                ? books
+                : books.filter((b) => (
+                  b.title.toLowerCase().includes(query.toLowerCase())
+                ))
+                <input
+                className="search-books"
+                type="text" 
+                placeholder="Search by title or author"
+                value={query}
+                onChange={(event) => this.updateQuery(event.target.value)}
+                />
 
               </div>
             </div>
