@@ -1,30 +1,54 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import BookShelf from './BookShelf'
 import * as BooksAPI from '../BooksAPI'
+import Book from './Book'
+
+
 
 
 class SearchPage extends Component {
-    static propTypes = {
 
+    state = {
+        books: []
     }
-    // updateQuery = (query) => {
-    //     this.setState(() =>({
-    //         query: query.trim()
-    // }))
-    // }
 
     search = (query) => {
-        console.log("Function called")
+
+        if(query === '') {
+            this.setState({
+                books: []
+            });
+            return;
+        }
+
         BooksAPI.search(query)
         .then(response => {
             console.log(response)
+
+            if(response.error) {
+                this.setState({
+                    books: []
+                });
+                return;
+            }
+
+            const books = []
+            for (let book of response) {
+                if (book.imageLinks) {
+                    if (!book.authors) {
+                        book.authors = []
+                    }
+                    books.push(book)
+                }
+            }
+            this.setState({
+                books: books
+            })
         });
     }
     
     render() {
-        // const { query } = this.state.query
-        // const { books } = this.state.allBooks
+
         return (
             <div className="search-books">
             <div className="search-books-bar">
@@ -47,7 +71,11 @@ class SearchPage extends Component {
               </div>
             </div>
             <div className="search-books-results">
-              <ol className="books-grid"></ol>
+                <BookShelf
+                    title = "Results"
+                    books = {this.state.books}
+                    changeShelf = {Book.changeShelf}
+                />
             </div>
           </div>
 

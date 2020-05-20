@@ -17,7 +17,6 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: false,
-    allBooks: [],
     currentlyReading: [],
     wantToRead: [],
     read: [],
@@ -34,11 +33,9 @@ class BooksApp extends React.Component {
       const currentlyReading = []
       const wantToRead = []
       const read = []
-      const allBooks = []
 
       //filter books
       for (let book of response) {
-        allBooks.push(book)
         if(book.shelf === "currentlyReading") {
           currentlyReading.push(book)
         }
@@ -54,7 +51,6 @@ class BooksApp extends React.Component {
         currentlyReading: currentlyReading,
         wantToRead: wantToRead,
         read: read,
-        allBooks: allBooks
       });
 
     });
@@ -68,11 +64,6 @@ class BooksApp extends React.Component {
     });
   }
 
-  updateQuery = (query) => {
-    this.setState(() =>({
-      query: query.trim()
-  }))
-  }
 
   render() {
    

@@ -7,7 +7,7 @@ class Book extends Component {
         bookId: PropTypes.string.isRequired,
         coverURL: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
-        authors: PropTypes.array.isRequired,
+        authors: PropTypes.array,
         changeShelf: PropTypes.func.isRequired,
         bookShelf: PropTypes.string.isRequired
     }
