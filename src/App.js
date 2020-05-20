@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import BookShelf from './components/BookShelf'
+import SearchPage from './components/SearchPage'
 
 class BooksApp extends React.Component {
   static propTypes = {
@@ -16,6 +17,7 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: false,
+    allBooks: [],
     currentlyReading: [],
     wantToRead: [],
     read: [],
@@ -32,9 +34,11 @@ class BooksApp extends React.Component {
       const currentlyReading = []
       const wantToRead = []
       const read = []
+      const allBooks = []
 
       //filter books
       for (let book of response) {
+        allBooks.push(book)
         if(book.shelf === "currentlyReading") {
           currentlyReading.push(book)
         }
@@ -49,7 +53,8 @@ class BooksApp extends React.Component {
       this.setState({
         currentlyReading: currentlyReading,
         wantToRead: wantToRead,
-        read: read
+        read: read,
+        allBooks: allBooks
       });
 
     });
@@ -70,38 +75,12 @@ class BooksApp extends React.Component {
   }
 
   render() {
-
-
+   
 
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <div className="search-books">
-            <div className="search-books-bar">
-              <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
-              <div className="search-books-input-wrapper">
-                {JSON.stringify(this.state.query)}
-                  {/* NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms. */}
-                <form>
-                <input
-                className="search-books"
-                type="text" 
-                placeholder="Search by title or author"
-                value={this.state.query}
-                onChange={(event) => this.updateQuery(event.target.value)}
-                />
-                </form>
-              </div>
-            </div>
-            <div className="search-books-results">
-              <ol className="books-grid"></ol>
-            </div>
-          </div>
+          <SearchPage />
         ) : (
           <div className="list-books">
             <div className="list-books-title">
