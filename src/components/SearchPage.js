@@ -23,7 +23,6 @@ class SearchPage extends Component {
 
         BooksAPI.search(query)
         .then(response => {
-            console.log(response)
 
             if(response.error) {
                 this.setState({
@@ -46,6 +45,15 @@ class SearchPage extends Component {
             })
         });
     }
+
+    changeShelf = (bookId, shelf) => {
+        const book = {id: bookId};
+        BooksAPI.update(book, shelf)
+        .then( response => {
+          this.requestBooks();
+        });
+      }
+      
     
     render() {
 

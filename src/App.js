@@ -56,13 +56,6 @@ class BooksApp extends React.Component {
     });
   }
 
-  changeShelf = (bookId, shelf) => {
-    const book = {id: bookId};
-    BooksAPI.update(book, shelf)
-    .then( response => {
-      this.requestBooks();
-    });
-  }
 
 
   render() {
@@ -81,17 +74,17 @@ class BooksApp extends React.Component {
               <BookShelf
                 title = "Currently Reading"
                 books = {this.state.currentlyReading}
-                changeShelf = {this.changeShelf}
+                onShelfChanged = {this.requestBooks}
               />
               <BookShelf
                 title = "Want to Read"
                 books = {this.state.wantToRead}
-                changeShelf = {this.changeShelf}
+                onShelfChanged = {this.requestBooks}
               />
               <BookShelf
                 title = "Read"
                 books = {this.state.read}
-                changeShelf = {this.changeShelf}
+                onShelfChanged = {this.requestBooks}
               />
             </div>
 

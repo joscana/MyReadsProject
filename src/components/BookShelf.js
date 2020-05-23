@@ -6,7 +6,7 @@ class BookShelf extends Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
         books: PropTypes.array.isRequired,
-        changeShelf: PropTypes.func.isRequired
+        onShelfChanged: PropTypes.func.isRequired
     }
 
 
@@ -23,7 +23,7 @@ class BookShelf extends Component {
                     title = {book.title}
                     authors = {book.authors}
                     bookShelf = { !book.shelf ? 'none': book.shelf }
-                    changeShelf = {this.props.changeShelf}
+                    onShelfChanged = {this.props.onShelfChanged}
                     />
             </li>)
         }
