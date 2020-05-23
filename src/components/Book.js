@@ -10,7 +10,7 @@ class Book extends Component {
         coverURL: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
         authors: PropTypes.array,
-        onShelfChanged: PropTypes.func.isRequired,
+        onShelfChanged: PropTypes.func,
         bookShelf: PropTypes.string.isRequired
     }
     
@@ -19,7 +19,9 @@ class Book extends Component {
             const book = {id: this.props.bookId};
             BooksAPI.update(book, shelf)
             .then( response => {
-              this.props.onShelfChanged();
+                if(this.props.onShelfChanged){
+                    this.props.onShelfChanged();
+                }
             })
         }
 

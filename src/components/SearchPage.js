@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
 import BookShelf from './BookShelf'
 import * as BooksAPI from '../BooksAPI'
-import Book from './Book'
-
-
 
 
 class SearchPage extends Component {
 
     state = {
-        books: []
+        books: [],
     }
 
     search = (query) => {
@@ -45,15 +42,7 @@ class SearchPage extends Component {
             })
         });
     }
-
-    changeShelf = (bookId, shelf) => {
-        const book = {id: bookId};
-        BooksAPI.update(book, shelf)
-        .then( response => {
-          this.requestBooks();
-        });
-      }
-      
+    
     
     render() {
 
@@ -82,7 +71,6 @@ class SearchPage extends Component {
                 <BookShelf
                     title = "Results"
                     books = {this.state.books}
-                    changeShelf = {Book.changeShelf}
                 />
             </div>
           </div>
