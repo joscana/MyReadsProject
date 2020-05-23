@@ -22,7 +22,7 @@ class BookShelf extends Component {
                     coverURL= {book.imageLinks.thumbnail}
                     title = {book.title}
                     authors = {book.authors}
-                    bookShelf = {book.shelf}
+                    bookShelf = { !book.shelf ? 'none': book.shelf }
                     changeShelf = {this.props.changeShelf}
                     />
             </li>)
