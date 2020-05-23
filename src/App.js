@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import BookShelf from './components/BookShelf'
@@ -9,14 +8,12 @@ import { Route } from 'react-router-dom'
 
 
 class BooksApp extends React.Component {
-  static propTypes = {
-    books: PropTypes.array.isRequired,
-  }
+
   state = {
     currentlyReading: [],
     wantToRead: [],
     read: [],
-    query: ''
+    bookShelfForId: {}
   }
 
   componentDidMount() {
@@ -29,9 +26,13 @@ class BooksApp extends React.Component {
       const currentlyReading = []
       const wantToRead = []
       const read = []
+      const bookShelfForId = {}
 
       //filter books
       for (let book of response) {
+
+        bookShelfForId[book.id]=book.shelf;
+
         if(book.shelf === "currentlyReading") {
           currentlyReading.push(book)
         }
@@ -47,6 +48,7 @@ class BooksApp extends React.Component {
         currentlyReading: currentlyReading,
         wantToRead: wantToRead,
         read: read,
+        bookShelfForId: bookShelfForId
       });
 
     });
@@ -89,7 +91,12 @@ class BooksApp extends React.Component {
           </Link>
         </div>
       )} />
-      <Route path='/search' component={SearchPage} />
+      <Route path='/search' render={() => (
+        <SearchPage
+        bookShelfForId = {this.state.bookShelfForId}
+        />
+      )
+      } />
           
       </div>
     )

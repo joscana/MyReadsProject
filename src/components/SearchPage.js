@@ -2,9 +2,15 @@ import React, { Component } from 'react'
 import BookShelf from './BookShelf'
 import * as BooksAPI from '../BooksAPI'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+
 
 
 class SearchPage extends Component {
+
+    static propTypes = {
+        bookShelfForId: PropTypes.object.isRequired
+    }
 
     state = {
         books: [],
@@ -35,7 +41,15 @@ class SearchPage extends Component {
                     if (!book.authors) {
                         book.authors = []
                     }
-                    books.push(book)
+
+                    if(this.props.bookShelfForId[book.id]) {
+                        book.shelf= this.props.bookShelfForId[book.id];
+                    }
+                    else {
+                        book.shelf = 'none';
+                    }
+
+                    books.push(book);
                 }
             }
             this.setState({
